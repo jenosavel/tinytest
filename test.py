@@ -20,6 +20,7 @@ class TestClass(object):
 def cleanup(method):
 
     assert callable(method), 'Method is not callable. {0}'.format(method)
+    
     method.fixture = TestClass.Fixtures.CLEANUP
     return method
 
@@ -28,6 +29,8 @@ def description(stringParam):
 
     def callableTest(method):
 
+        assert callable(method), 'Method is not callable. {0}'.format(method)
+    
         method.description = stringParam
         return method
 
@@ -37,6 +40,7 @@ def description(stringParam):
 def setup(method):
 
     assert callable(method), 'Method is not callable. {0}'.format(method)
+    
     method.fixture = TestClass.Fixtures.SETUP
     return method
 
