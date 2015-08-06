@@ -22,6 +22,7 @@ class TestClass(object):
 def cleanup(method):
 
     assert callable(method), 'Method is not callable. {0}'.format(method)
+    
     method.fixture = TestClass.Fixtures.CLEANUP
     return method
 
