@@ -67,6 +67,9 @@ class TinyTester(object):
                 self.log.error('{0} does not inherit from TestClass'.format(cls))
                 continue
 
+            if hasattr(cls, TestClass.Fixtures.SKIP) and getattr(cls, TestClass.Fixtures.SKIP):
+                continue
+
             self.addFileHandler(cls.__name__)
 
             self.log.info('[ {0} ]'.format(cls.description))
@@ -101,6 +104,9 @@ class TinyTester(object):
             report.initialize([test.description for test in tests])
 
             for test in tests:
+
+                if hasattr(test, TestClass.Fixtures.SKIP) and getattr(test, TestClass.Fixtures.SKIP):
+                    continue
 
                 self.log.info('[ {0} should {1} ]'.format(cls.description, test.description))
                 status = Status.INCOMPLETE

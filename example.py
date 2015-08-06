@@ -43,6 +43,12 @@ class BadTest(TestClass):
 
         self.log.debug('Testing some things')
 
+    @skip
+    @should('maybe sometimes do a thing')
+    def thingsImLazyAbout(self):
+
+        self.log.debug('Skipping some tests here, like a jerk')
+
 
 if __name__ == '__main__':
 

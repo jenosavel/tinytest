@@ -9,6 +9,8 @@ class TestClass(object):
         CLEANUP = 'cleanup'
         TEST    = 'test'
 
+        SKIP    = 'doNotRun'
+
         ALL = [SETUP, CLEANUP, TEST]
 
     @property
@@ -28,6 +30,8 @@ def description(stringParam):
 
     def callableTest(method):
 
+        assert callable(method), 'Method is not callable. {0}'.format(method)
+
         method.description = stringParam
         return method
 
@@ -37,7 +41,16 @@ def description(stringParam):
 def setup(method):
 
     assert callable(method), 'Method is not callable. {0}'.format(method)
+
     method.fixture = TestClass.Fixtures.SETUP
+    return method
+
+
+def skip(method):
+
+    assert callable(method), 'Method is not callable. {0}'.format(method)
+
+    method.doNotRun = True
     return method
 
 

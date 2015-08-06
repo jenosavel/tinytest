@@ -41,7 +41,7 @@ class Report(object):
 
         if self.__results:
 
-            statusPadding = max(len(result[Report.STATUS]) for result in self.__results.values())
+            statusPadding = max(len(result[Report.STATUS]) for result in self.__results.values()) + 2
             descPadding   = max(len(test) for test in self.__results.keys())
 
             for test, result in sorted(self.__results.iteritems(), key = lambda tuple: tuple[1][Report.STATUS]):
@@ -49,7 +49,7 @@ class Report(object):
                 status = result[Report.STATUS]
                 failure = ' // {0}'.format(result[Report.REASON]) if status is Status.FAIL or status is Status.BLOCKED else ''
 
-                results.append('{0} {1}{2}'.format(
+                results.append('{0} {1} {2}'.format(
                     '[{0}]'.format(status.upper()).ljust(statusPadding),
                     test.ljust(descPadding),
                     failure
