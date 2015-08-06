@@ -1,7 +1,7 @@
 from tinytest.test import *
 
 
-@description('My one thing')
+@describe('My one thing')
 class MyTest(TestClass):
 
     @setup
@@ -25,7 +25,7 @@ class MyTest(TestClass):
         assert False, 'I always fail, just because!'
 
 
-@description('Another thing')
+@describe('Another thing')
 class BadTest(TestClass):
 
     @setup

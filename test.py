@@ -19,7 +19,16 @@ class TestClass(object):
         return logging.getLogger(self.__class__.__name__)
 
 
+####################################################################
+#
+#   Fixture Decorators
+#
+####################################################################
+
 def cleanup(method):
+    """
+    Mark a method as the cleanup fixture
+    """
 
     assert callable(method), 'Method is not callable. {0}'.format(method)
     
@@ -27,7 +36,10 @@ def cleanup(method):
     return method
 
 
-def description(stringParam):
+def describe(stringParam):
+    """
+    Add a description for reporting readability.
+    """
 
     def callableTest(method):
 
@@ -40,6 +52,9 @@ def description(stringParam):
 
 
 def setup(method):
+    """
+    Mark a method as the setup fixture
+    """
 
     assert callable(method), 'Method is not callable. {0}'.format(method)
 
@@ -48,6 +63,9 @@ def setup(method):
 
 
 def skip(method):
+    """
+    Temporarily skip a method during execution.
+    """
 
     assert callable(method), 'Method is not callable. {0}'.format(method)
 
@@ -56,6 +74,9 @@ def skip(method):
 
 
 def should(stringParam):
+    """
+    Mark a method as a test fixture. Provide a readable reporting statement.
+    """
 
     def callableTest(method):
 
