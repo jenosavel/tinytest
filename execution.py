@@ -1,3 +1,4 @@
+import inspect
 import logging
 import os
 import sys
@@ -30,18 +31,19 @@ class TinyTester(object):
         self.log.addHandler(consoleHandler)
 
         self.log.setLevel(level)
+        self.log.propagate = False
 
-    def addFileHandler(self, testName):
+    def addFileHandler(self, cls):
 
         assert not self.__fileHandler, 'File handler already exists.'
 
-        directory = os.path.join(os.curdir, 'results')
-        path      = os.path.join(directory, '{0}.txt'.format(testName))
+        testFile  = inspect.getfile(cls)
+        testDir   = os.path.dirname(testFile)
+        resultDir = os.path.join(testDir, 'results')
+        path      = os.path.join(resultDir, '{0}.log'.format(cls.__name__))
 
-        self.log.debug('Creating result file: {0}'.format(path))
-
-        if not os.path.exists(directory):
-            os.makedirs(directory)
+        if not os.path.exists(resultDir):
+            os.makedirs(resultDir)
 
         self.__fileHandler = logging.FileHandler(path, 'w')
         self.__fileHandler.setFormatter(self.__formatter)
@@ -70,7 +72,7 @@ class TinyTester(object):
             if hasattr(cls, TestClass.Fixtures.SKIP) and getattr(cls, TestClass.Fixtures.SKIP):
                 continue
 
-            self.addFileHandler(cls.__name__)
+            self.addFileHandler(cls)
 
             self.log.info('[ {0} ]'.format(cls.description))
 
