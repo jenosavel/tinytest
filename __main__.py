@@ -1,5 +1,5 @@
 import argparse
-import importlib
+import imp
 import inspect
 import os
 
@@ -41,7 +41,7 @@ def getTests(directory):
         tests = []
         for file in getFiles(directory):
 
-            module = importlib.import_module(file)
+            module = imp.load_source(file, os.path.join(directory, '{0}.py'.format(file)))
 
             for name, obj in inspect.getmembers(module):
 
@@ -57,13 +57,19 @@ def getTests(directory):
 #
 ####################################################################
 
-parser = argparse.ArgumentParser()
+def run():
 
-parser.add_argument('--directory', required = False, default = None,   help = 'Location of tests to run. Defaults to current working directory.')
-parser.add_argument('--loglevel',  required = False, default = 'INFO', help = 'The logging level.')
+    parser = argparse.ArgumentParser()
 
-args = parser.parse_args()
+    parser.add_argument('--directory', required = False, default = None,   help = 'Location of tests to run. Defaults to current working directory.')
+    parser.add_argument('--loglevel',  required = False, default = 'INFO', help = 'The logging level.')
 
-directory = args.directory if args.directory is not None else os.getcwd()
+    args = parser.parse_args()
 
-TinyTester(level=args.loglevel).run(getTests(directory))
+    directory = args.directory if args.directory is not None else os.getcwd()
+
+    TinyTester(level=args.loglevel).run(getTests(directory))
+
+
+if __name__ == '__main__':
+    run()
