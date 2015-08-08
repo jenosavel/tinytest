@@ -1,3 +1,19 @@
+####################################################################
+#
+#   Example command line usage:
+#   >python -m tinytest --directory C:\path\to\tests --loglevel DEBUG
+#
+#   --directory
+#       Path to the directory where test files are
+#       Not required, defaults to current working directory
+#
+#   --loglevel
+#       The logging level of output
+#       Not required, defaults to INFO
+#
+####################################################################
+
+
 from tinytest.test import *
 
 
