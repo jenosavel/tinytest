@@ -45,7 +45,7 @@ class MyTest(TestClass):
 
         thingToTest = 1
 
-        actual = checkFor('Unexpected int value').using(thingToTest)
+        actual = find('Unexpected int value').using(thingToTest)
         verify(actual).isEqualTo(2)
 
 

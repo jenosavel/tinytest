@@ -1,7 +1,7 @@
 import collections
 
 
-def checkFor(description):
+def find(description):
 
     return Description(description)
 
