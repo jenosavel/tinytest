@@ -40,6 +40,14 @@ class MyTest(TestClass):
 
         assert False, 'I always fail, just because!'
 
+    @should('show off assertions')
+    def assertionsRCool(self):
+
+        thingToTest = 1
+
+        actual = represent('Unexpected int value').using(thingToTest)
+        verify(actual).isEqualTo(2)
+
 
 @describe('Another thing')
 class BadTest(TestClass):

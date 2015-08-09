@@ -186,25 +186,25 @@ class VerifyCollection(object):
 
     def contains(self, expected):
 
-        assert self.__actual.value.contains(expected), '{0} Expected {1} in {2}'.format(self.__actual.description, expected, self.__actual.value)
+        assert self.__actual.value.contains(expected), '{0}: Expected {1} in {2}.'.format(self.__actual.description, expected, self.__actual.value)
         return True
 
     def notContains(self, expected):
 
-        assert not self.__actual.value.contains(expected), '{0} Expected {1} not in {2}'.format(self.__actual.description, expected, self.__actual.value)
+        assert not self.__actual.value.contains(expected), '{0}: Expected {1} not in {2}.'.format(self.__actual.description, expected, self.__actual.value)
         return True
 
     def isEmpty(self):
 
-        assert not self.__actual.value, '{0} Expected empty. Actual {1}'.format(self.__actual.description, self.__actual.value)
+        assert not self.__actual.value, '{0}: Expected empty. Actual {1}.'.format(self.__actual.description, self.__actual.value)
         return True
 
     def isNotEmpty(self):
 
-        assert self.__actual.value, '{0} Expected not empty. Actual {1}'.format(self.__actual.description, self.__actual.value)
+        assert self.__actual.value, '{0}: Expected not empty. Actual {1}.'.format(self.__actual.description, self.__actual.value)
         return True
 
     def isEqualTo(self, expected):
 
-        assert isinstance(expected, collections.Sequence), 'Expected must be a sequence.'
-        assert tuple(self.__actual.value) == tuple(expected), '{0} Expected {1}. Actual {2}.'.format(self.__actual.description, expected, self.__actual.value)
+        assert isinstance(expected, collections.Sequence), 'Expected value must be a sequence.'
+        assert tuple(self.__actual.value) == tuple(expected), '{0}: Expected {1}. Actual {2}.'.format(self.__actual.description, expected, self.__actual.value)
