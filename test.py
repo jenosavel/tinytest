@@ -1,5 +1,7 @@
 import logging
 
+from assertion import represent, verify
+
 
 class TestClass(object):
 
