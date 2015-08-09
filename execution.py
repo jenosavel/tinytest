@@ -1,3 +1,4 @@
+import datetime
 import inspect
 import logging
 import os
@@ -63,13 +64,16 @@ class TinyTester(object):
 
         assert isinstance(classes, list), 'Classes must be provided as a list'
 
+        suiteStart     = datetime.datetime.now()
+
+        totalCompleted = 0
+        totalPassed    = 0
+        totalSkipped   = 0
+
         for cls in classes:
 
             if not issubclass(cls, TestClass):
                 self.log.error('{0} does not inherit from TestClass'.format(cls))
-                continue
-
-            if hasattr(cls, TestClass.Fixtures.SKIP) and getattr(cls, TestClass.Fixtures.SKIP):
                 continue
 
             self.addFileHandler(cls)
@@ -102,8 +106,15 @@ class TinyTester(object):
 
             assert tests, 'No tests found.'
 
+            if hasattr(cls, TestClass.Fixtures.SKIP) and getattr(cls, TestClass.Fixtures.SKIP):
+
+                totalSkipped += len(tests)
+                continue
+
             report = Report()
             report.initialize([test.description for test in tests])
+
+            testStart = datetime.datetime.now()
 
             for test in tests:
 
@@ -150,6 +161,10 @@ class TinyTester(object):
 
                     report.update(test.description, status)
 
+            completed = report.completed
+            duration  = (datetime.datetime.now() - testStart).total_seconds()
+            passed    = report.passes
+            skipped   = len(tests) - completed
 
             self.log.info('=============================================')
             self.log.info(cls.description)
@@ -165,4 +180,13 @@ class TinyTester(object):
 
             self.log.info('=============================================')
 
+            self.log.info('Passed {0}/{1}. Skipped {2}. Run time: {3} seconds.'.format(passed, completed, skipped, duration))
+
+            totalCompleted += completed
+            totalPassed    += passed
+            totalSkipped   += skipped
+
             self.removeFileHandler()
+
+        duration = (datetime.datetime.now() - suiteStart).total_seconds()
+        self.log.info('Passed {0}/{1}. Skipped {2}. Run time: {3} seconds.'.format(totalPassed, totalCompleted, totalSkipped, duration))

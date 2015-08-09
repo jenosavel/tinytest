@@ -35,6 +35,16 @@ class Report(object):
             self.__failure = message
 
     @property
+    def completed(self):
+
+        return sum(1 for test in self.__results if self.__results[test][Report.STATUS] != Status.INCOMPLETE)
+
+    @property
+    def passes(self):
+
+        return sum(1 for test in self.__results if self.__results[test][Report.STATUS] == Status.PASS)
+
+    @property
     def results(self):
 
         results = []
