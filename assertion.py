@@ -1,7 +1,7 @@
 import collections
 
 
-def represent(description):
+def checkFor(description):
 
     return Description(description)
 

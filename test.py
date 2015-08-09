@@ -1,6 +1,6 @@
 import logging
 
-from assertion import represent, verify
+from assertion import checkFor, verify
 
 
 class TestClass(object):
