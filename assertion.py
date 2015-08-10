@@ -208,3 +208,8 @@ class VerifyCollection(object):
 
         assert isinstance(expected, collections.Sequence), 'Expected value must be a sequence.'
         assert tuple(self.__actual.value) == tuple(expected), '{0}: Expected {1}. Actual {2}.'.format(self.__actual.description, expected, self.__actual.value)
+
+    def size(self, expected):
+
+        actual = sum(1 for _ in self.__actual.value)
+        assert actual == expected, '{0}: Expected size {1}. Actual {2}'.format(self.__actual.description, expected, actual)
